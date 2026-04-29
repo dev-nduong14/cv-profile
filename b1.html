@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | Phan Ngọc Dương - Embedded Systems</title>
+    <!-- Font Awesome cho các icon chuyên nghiệp -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter - hiện đại và dễ đọc -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Thiết lập các biến màu sắc và phông chữ */
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: rgba(255, 255, 255, 0.03); /* Hiệu ứng gương mờ */
+            --border-color: rgba(255, 255, 255, 0.08);
+            --primary-accent: #00f2fe;
+            --secondary-accent: #4facfe;
+            --primary-gradient: linear-gradient(135deg, var(--primary-accent) 0%, var(--secondary-accent) 100%);
+            --text-main: #f0f6fc;
+            --text-muted: #8b949e;
+            --font-inter: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-inter);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2.5rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Thêm hiệu ứng nền để lấp đầy khoảng trống */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 1000px;
+            height: 1000px;
+            top: -500px;
+            left: -300px;
+            background: radial-gradient(circle, rgba(0, 242, 254, 0.1) 0%, rgba(79, 172, 254, 0.05) 50%, rgba(13, 17, 23, 0) 100%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .profile-container {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 28px;
+            padding: 3rem;
+            max-width: 950px;
+            width: 100%;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.7);
+            display: grid;
+            grid-template-columns: 1fr 1.9fr;
+            gap: 4rem;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Thêm một hiệu ứng hoạt ảnh nhẹ khi di chuột */
+        .profile-container:hover {
+            border-color: rgba(79, 172, 254, 0.2);
+            box-shadow: 0 40px 70px -15px rgba(0, 242, 254, 0.15);
+        }
+
+        /* Avatar & Info Left - Phần này có hiệu ứng gương mờ chuyên nghiệp hơn */
+        .info-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding-right: 1.5rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Vòng tròn phát sáng được cải tiến để có chiều sâu */
+        .avatar-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 175px;
+            height: 175px;
+            border-radius: 50%;
+            background: rgba(0, 242, 254, 0.2);
+            box-shadow: 0 0 40px 10px rgba(0, 242, 254, 0.3),
+                        0 0 60px 15px rgba(79, 172, 254, 0.2);
+            z-index: -1;
+        }
+
+        .avatar {
+            width: 165px;
+            height: 165px;
+            border-radius: 50%;
+            background: #000; /* Nền tối cho avatar chữ PD */
+            padding: 4px;
+            box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .avatar-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 3rem;
+            font-weight: 800;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            border: 5px solid var(--bg-color);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            position: relative;
+        }
+        
+        /* Hiệu ứng gương mờ cho chính avatar chữ */
+        .avatar-inner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            background: inherit;
+            filter: blur(10px);
+            z-index: -1;
+        }
+
+        .name {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .title {
+            color: var(--secondary-accent);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Chuyển Bio sang định dạng gạch đầu dòng chuyên nghiệp để lấp đầy khoảng trống */
+        .bio {
+            list-style: none;
+            padding: 0;
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1rem;
+            text-align: left;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 2rem;
+            width: 100%;
+        }
+
+        .bio li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .bio li strong {
+            color: #fff;
+            white-space: nowrap;
+        }
+
+        .bio-icon {
+            color: var(--primary-accent);
+            font-size: 1.1rem;
+            margin-top: 2px;
+        }
+
+        /* Social Links được bố cục chuyên nghiệp hơn */
+        .social-links {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: auto;
+            justify-content: center;
+        }
+
+        .social-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 1.3rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-btn:hover {
+            color: #fff;
+            background: var(--primary-gradient);
+            border-color: transparent;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 242, 254, 0.25);
+        }
+
+        /* Details Right */
+        .details-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 10px;
+        }
+
+        .section-title i {
+            color: var(--secondary-accent);
+            font-size: 1.2rem;
+        }
+
+        /* Cải tiến phần Kỹ năng để lấp đầy khoảng trống và chuyên nghiệp hơn */
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-muted);
+            padding: 0.8rem 1.2rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
+        }
+
+        .skill-tag i {
+            color: var(--secondary-accent);
+            font-size: 1rem;
+        }
+
+        .skill-tag:hover {
+            background: rgba(79, 172, 254, 0.1);
+            color: #fff;
+            border-color: var(--primary-accent);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(79, 172, 254, 0.15);
+        }
+
+        /* Cải tiến phần Dự án để có chiều sâu và chi tiết hơn */
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .project-item {
+            background: rgba(0,0,0,0.25);
+            padding: 1.5rem 1.8rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--border-color);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .project-item:hover {
+            border-color: rgba(255,255,255,0.2);
+            border-left-color: var(--primary-accent);
+            background: rgba(255, 255, 255, 0.03);
+            transform: translateX(5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.3rem;
+        }
+
+        .project-name {
+            font-weight: 700;
+            color: #fff;
+            font-size: 1.15rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Thẻ badge thời gian nổi bật hơn */
+        .project-date {
+            font-size: 0.75rem;
+            color: var(--primary-accent);
+            background: rgba(0, 242, 254, 0.1);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            border: 1px solid rgba(0, 242, 254, 0.2);
+        }
+
+        .project-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        /* Thêm Tech Stack cho dự án để lấp đầy khoảng trống */
+        .project-tech {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: auto;
+        }
+
+        .tech-badge {
+            font-size: 0.75rem;
+            color: #b0b9c3;
+            background: rgba(255,255,255,0.05);
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.3s;
+        }
+
+        .project-item:hover .tech-badge {
+            background: rgba(79, 172, 254, 0.08);
+            border-color: rgba(79, 172, 254, 0.2);
+            color: #fff;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+                padding: 2.5rem;
+                gap: 2.5rem;
+            }
+            .info-section {
+                border-right: none;
+                padding-right: 0;
+                border-bottom: 1px solid rgba(255,255,255,0.05);
+                padding-bottom: 2.5rem;
+            }
+            .skills {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-container">
+        <!-- Cột trái: Ảnh và Mạng xã hội được cải tiến -->
+        <div class="info-section">
+            <div class="avatar-wrapper">
+                <div class="avatar-glow"></div>
+                <div class="avatar">
+                    <div class="avatar-inner">
+                        PD
+                    </div>
+                </div>
+            </div>
+            <h1 class="name">Phan Ngọc Dương</h1>
+            <p class="title">Embedded Systems Developer</p>
+            
+            <!-- Chuyển Bio sang định dạng gạch đầu dòng chuyên nghiệp để lấp đầy khoảng trống -->
+            <ul class="bio">
+                <li>
+                    <i class="fas fa-graduation-cap bio-icon"></i>
+                    <div> <strong>Học vấn:</strong><br>Sinh viên năm 2 - Kỹ thuật Điện tử Viễn thông, Học viện Kỹ thuật Mật Mã (KMA).</div>
+                </li>
+                <li>
+                    <i class="fas fa-bullseye bio-icon"></i>
+                    <div> <strong>Mục tiêu:</strong><br>Trở thành Kỹ sư Lập trình Nhúng (Embedded Systems Engineer).</div>
+                </li>
+                <li>
+                    <i class="fas fa-lightbulb bio-icon"></i>
+                    <div> <strong>Định hướng:</strong><br>Tập trung nghiên cứu kiến trúc vi điều khiển, thiết kế phần cứng và tối ưu Firmware.</div>
+                </li>
+            </ul>
+
+            <div class="social-links">
+                <a href="https://www.facebook.com/dev.nduong" target="_blank" class="social-btn" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/_ngduong142/" target="_blank" class="social-btn" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://github.com/dev-nduong14" target="_blank" class="social-btn" title="Github">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Cột phải: Thông tin chi tiết được cải tiến với Tech Stack -->
+        <div class="details-section">
+            <h3 class="section-title"><i class="fas fa-microchip"></i> Kỹ năng chuyên môn</h3>
+            <div class="skills">
+                <span class="skill-tag"><i class="fas fa-code"></i> C/C++</span>
+                <span class="skill-tag"><i class="fas fa-memory"></i>STM32F103C8T6</span>
+                <span class="skill-tag"><i class="fas fa-robot"></i>ARDUINO UNO R3</span>
+                <span class="skill-tag"><i class="fas fa-network-wired"></i> SNF407</span>
+                <span class="skill-tag"><i class="fas fa-wave-square"></i> VHDL</span>
+                <span class="skill-tag"><i class="fas fa-check-double"></i> Proteus</span>
+                <span class="skill-tag"><i class="fas fa-laptop-code"></i> Vivado</span>
+            </div>
+
+            <h3 class="section-title"><i class="fas fa-briefcase"></i> Dự án tiêu biểu</h3>
+            <div class="projects-list">
+                <!-- Project 1 -->
+                <div class="project-item">
+                    <div class="project-header">
+                        <div class="project-name">Smart Environment Monitor</div>
+                        <span class="project-date">Tháng 4/2026</span>
+                    </div>
+                    <div class="project-desc">Hệ thống giám sát độ ẩm đất và môi trường, đọc dữ liệu từ cảm biến và hiển thị trực tiếp lên màn hình LCD.</div>
+                    <div class="project-tech">
+                        <span class="tech-badge">STM32F103C8T6</span>
+                        <span class="tech-badge">C/C++</span>
+                        <span class="tech-badge">DHT11</span>
+                        <span class="tech-badge">LCD 1602</span>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-item">
+                    <div class="project-header">
+                        <div class="project-name">Real-time Digital Clock</div>
+                        <span class="project-date">Tháng 4/2026</span>
+                    </div>
+                    <div class="project-desc">Đồng hồ số thời gian thực với tính năng lưu trữ cài đặt báo thức vào bộ nhớ Flash, giao tiếp và hiển thị trên màn hình LCD.</div>
+                    <div class="project-tech">
+                        <span class="tech-badge">STM32F103C8T6</span>
+                        <span class="tech-badge">C/C++</span>
+                        <span class="tech-badge">Flash Memory</span>
+                        <span class="tech-badge">LCD</span>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-item">
+                    <div class="project-header">
+                        <div class="project-name">Speed Tracking System</div>
+                        <span class="project-date">Tháng 4/2026</span>
+                    </div>
+                    <div class="project-desc">Hệ thống đo vận tốc ứng dụng cảm biến tránh vật cản hồng ngoại, thuật toán xử lý và tính toán tốc độ chính xác.</div>
+                    <div class="project-tech">
+                        <span class="tech-badge">STM32F103C8T6</span>
+                        <span class="tech-badge">C/C++</span>
+                        <span class="tech-badge">IR Sensor</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
